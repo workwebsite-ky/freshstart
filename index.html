@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fresh Start Cleaning Service · Deep Creek Lake, MD</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --lake:#1a4a6b;--lake-d:#0d2f45;--lake-m:#2e7db8;--lake-l:#e8f3fb;
+  --forest:#2d5a27;--forest-l:#eaf3e8;
+  --cream:#faf8f5;--gold:#c8922a;--gold-l:#fdf3e3;--slate:#2c3e50;
+  --wa:#25D366;--wa-d:#128C7E;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;color:var(--slate);overflow-x:hidden;background:#fff}
+.serif{font-family:'Cormorant Garamond',serif}
+img{display:block;width:100%;object-fit:cover}
+
+/* ─── SCROLL ANIM ─── */
+.anim{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.anim.visible{opacity:1;transform:none}
+.anim[data-d="1"]{transition-delay:.1s}.anim[data-d="2"]{transition-delay:.2s}
+.anim[data-d="3"]{transition-delay:.3s}.anim[data-d="4"]{transition-delay:.4s}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-block;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:600;border-radius:6px;cursor:pointer;transition:all .2s;border:none}
+.btn-primary{background:var(--lake);color:#fff;padding:15px 34px;font-size:15px}
+.btn-primary:hover{background:var(--lake-m);transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,74,107,.3)}
+.btn-primary:active{transform:scale(.98)}
+.btn-outline{background:transparent;color:#fff;padding:14px 28px;font-size:15px;border:2px solid rgba(255,255,255,.65)}
+.btn-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.btn-ghost{background:transparent;color:var(--lake);padding:11px 22px;font-size:14px;border:1.5px solid var(--lake)}
+.btn-ghost:hover{background:var(--lake);color:#fff}
+
+/* ─── NAV ─── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .35s,box-shadow .35s}
+#nav.scrolled{background:rgba(13,47,69,.96);backdrop-filter:blur(14px);box-shadow:0 2px 28px rgba(0,0,0,.18)}
+.nav-in{max-width:1180px;margin:0 auto;padding:0 28px;height:70px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-mark{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:17px;flex-shrink:0}
+.logo-name{font-family:'Cormorant Garamond',serif;color:#fff;font-size:19px;font-weight:700;line-height:1}
+.logo-sub{color:rgba(255,255,255,.55);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;gap:30px}
+.nav-a{color:rgba(255,255,255,.85);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+.nav-a:hover{color:#fff}
+.nav-call{padding:9px 20px;font-size:13px}
+.burger{display:none;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;line-height:1}
+.mob-menu{display:none;flex-direction:column;gap:14px;padding:18px 28px 26px;background:var(--lake-d)}
+.mob-menu.open{display:flex}
+
+/* ─── HERO ─── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:70px}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(105deg,rgba(10,30,50,.88) 0%,rgba(13,47,69,.72) 50%,rgba(20,60,35,.55) 100%)}
+.hero-in{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:80px 28px 100px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(200,146,42,.18);border:1px solid rgba(200,146,42,.45);border-radius:100px;padding:6px 16px;margin-bottom:26px}
+.hero-pill-dot{width:7px;height:7px;border-radius:50%;background:#c8922a;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+.hero-pill-txt{color:#f0c060;font-size:13px;font-weight:500;letter-spacing:.06em}
+.hero-h1{font-size:58px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:22px}
+.hero-h1 em{font-style:italic;color:#7fd4f8}
+.hero-p{color:rgba(255,255,255,.75);font-size:18px;line-height:1.7;margin-bottom:36px;max-width:520px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.hero-card{background:rgba(255,255,255,.08);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:20px}
+.hero-card-title{color:#fff;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;margin-bottom:4px}
+.hero-card-img{border-radius:10px;overflow:hidden;height:180px}
+.hero-card-img img{height:100%;object-fit:cover;transition:transform .4s}
+.hero-card-img:hover img{transform:scale(1.04)}
+.hero-card-feat{display:flex;flex-direction:column;gap:10px}
+.hero-feat-row{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.8);font-size:14px}
+.hero-feat-icon{width:28px;height:28px;border-radius:50%;background:rgba(127,212,248,.18);display:grid;place-items:center;font-size:13px;flex-shrink:0}
+
+/* ─── STATS BAR ─── */
+.stats-bar{background:var(--lake-d);padding:0 28px}
+.stats-in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid rgba(255,255,255,.08)}
+.stat-item{padding:28px 24px;border-right:1px solid rgba(255,255,255,.08);text-align:center}
+.stat-val{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:#fff;line-height:1}
+.stat-lbl{color:rgba(255,255,255,.5);font-size:13px;margin-top:4px}
+
+/* ─── TRUST BAR ─── */
+.trust-bar{background:var(--gold-l);border-top:1.5px solid #f0d9a8;border-bottom:1.5px solid #f0d9a8}
+.trust-in{max-width:1180px;margin:0 auto;padding:16px 28px;display:flex;gap:28px;flex-wrap:wrap;justify-content:center;align-items:center}
+.trust-item{color:var(--gold);font-size:13px;font-weight:600}
+
+/* ─── SECTION COMMONS ─── */
+.section{padding:100px 28px}
+.section-in{max-width:1180px;margin:0 auto}
+.sec-label{color:var(--lake-m);font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.sec-h2{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:700;color:var(--slate);line-height:1.15;margin-bottom:16px}
+.sec-h2 span{color:var(--lake)}
+.sec-p{color:#64748b;font-size:17px;line-height:1.75}
+
+/* ─── SERVICES ─── */
+.srv-bg{background:var(--cream)}
+.srv-head{text-align:center;margin-bottom:64px}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.srv-card{background:#fff;border-radius:18px;overflow:hidden;border:1.5px solid #e8edf2;transition:box-shadow .3s,transform .3s,border-color .3s;display:flex;flex-direction:column}
+.srv-card:hover{box-shadow:0 16px 48px rgba(26,74,107,.13);transform:translateY(-6px);border-color:var(--lake-m)}
+.srv-img{height:210px;overflow:hidden;position:relative}
+.srv-img img{height:100%;object-fit:cover;transition:transform .5s}
+.srv-card:hover .srv-img img{transform:scale(1.06)}
+.srv-badge{position:absolute;top:14px;right:14px;background:var(--lake);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em}
+.srv-body{padding:26px 26px 22px;flex:1;display:flex;flex-direction:column}
+.srv-icon{font-size:28px;margin-bottom:12px}
+.srv-title{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:700;color:var(--slate);margin-bottom:4px}
+.srv-sub{color:var(--lake-m);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.srv-desc{color:#64748b;font-size:14px;line-height:1.75;flex:1}
+.srv-cta{margin-top:20px;padding-top:18px;border-top:1.5px solid #f0f3f7}
+.srv-cta a{color:var(--lake);font-weight:600;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap .2s}
+.srv-cta a:hover{gap:10px}
+
+/* ─── PHOTO GALLERY STRIP ─── */
+.gallery-strip{background:#fff;padding:0}
+.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:320px 240px;gap:6px}
+.gallery-item{overflow:hidden;position:relative}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-item.tall{grid-row:1/3}
+.gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:16px 18px;background:linear-gradient(transparent,rgba(10,30,50,.75));color:#fff;font-size:13px;font-weight:500;opacity:0;transition:opacity .3s}
+.gallery-item:hover .gallery-caption{opacity:1}
+
+/* ─── HOW IT WORKS ─── */
+.how-bg{background:#fff}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.how-img-wrap{position:relative;border-radius:18px;overflow:hidden;height:520px}
+.how-img-wrap img{width:100%;height:100%;object-fit:cover}
+.how-img-badge{position:absolute;bottom:24px;left:24px;right:24px;background:rgba(13,47,69,.9);backdrop-filter:blur(8px);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;border:1px solid rgba(255,255,255,.1)}
+.how-badge-icon{font-size:28px;flex-shrink:0}
+.how-badge-txt{color:#fff;font-size:14px;line-height:1.5}
+.how-badge-txt strong{color:#7fd4f8;font-weight:600}
+.steps-list{display:flex;flex-direction:column;gap:28px;margin-top:40px}
+.step-item{display:flex;gap:20px;align-items:flex-start}
+.step-num-circle{width:48px;height:48px;border-radius:50%;background:var(--lake-l);border:2px solid var(--lake-m);display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--lake);flex-shrink:0}
+.step-body{}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:var(--slate);margin-bottom:6px}
+.step-desc{color:#64748b;font-size:14px;line-height:1.75}
+
+/* ─── WHY US ─── */
+.why-bg{background:linear-gradient(135deg,var(--lake) 0%,#0a2d4a 100%);padding:100px 28px;position:relative;overflow:hidden}
+.why-deco{position:absolute;right:-150px;top:-150px;width:550px;height:550px;border-radius:50%;border:1px solid rgba(255,255,255,.06);pointer-events:none}
+.why-deco2{position:absolute;right:-50px;top:-50px;width:350px;height:350px;border-radius:50%;border:1px solid rgba(255,255,255,.05);pointer-events:none}
+.why-in{max-width:1180px;margin:0 auto;position:relative;z-index:2}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.why-label{color:#7fd4f8;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.why-h2{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:700;color:#fff;margin-bottom:22px;line-height:1.15}
+.why-p{color:rgba(255,255,255,.72);font-size:16px;line-height:1.8;margin-bottom:32px}
+.feat-list{display:flex;flex-direction:column;gap:14px}
+.feat-row{display:flex;gap:12px;align-items:flex-start}
+.feat-chk{width:24px;height:24px;border-radius:50%;background:rgba(127,212,248,.15);display:grid;place-items:center;color:#7fd4f8;font-size:12px;flex-shrink:0;margin-top:1px}
+.feat-txt{color:rgba(255,255,255,.82);font-size:15px;line-height:1.5}
+.why-right{display:flex;flex-direction:column;gap:16px}
+.why-photo{border-radius:16px;overflow:hidden;height:240px}
+.why-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.why-photo:hover img{transform:scale(1.04)}
+.why-stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.why-stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;text-align:center}
+.why-stat-val{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:#fff;line-height:1}
+.why-stat-lbl{color:rgba(255,255,255,.5);font-size:12px;margin-top:4px}
+.testi{background:rgba(255,255,255,.06);border-left:3px solid #7fd4f8;border-radius:10px;padding:20px 22px}
+.testi-txt{color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;font-style:italic;margin-bottom:12px}
+.testi-author{color:rgba(255,255,255,.45);font-size:13px}
+
+/* ─── BEFORE/AFTER ─── */
+.ba-bg{background:var(--cream);padding:100px 28px}
+.ba-in{max-width:1180px;margin:0 auto}
+.ba-head{text-align:center;margin-bottom:56px}
+.ba-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.ba-card{border-radius:16px;overflow:hidden;background:#fff;border:1.5px solid #e8edf2;box-shadow:0 4px 20px rgba(26,74,107,.07)}
+.ba-imgs{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.ba-img-wrap{position:relative;height:220px;overflow:hidden}
+.ba-img-wrap img{width:100%;height:100%;object-fit:cover}
+.ba-tag{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.06em}
+.ba-tag.before{background:rgba(0,0,0,.55);color:#fff}
+.ba-tag.after{background:var(--lake);color:#fff}
+.ba-card-body{padding:18px 20px}
+.ba-card-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:var(--slate);margin-bottom:4px}
+.ba-card-sub{color:#94a3b8;font-size:13px}
+
+/* ─── FAQ ─── */
+.faq-bg{background:#fff;padding:100px 28px}
+.faq-in{max-width:760px;margin:0 auto}
+.faq-head{text-align:center;margin-bottom:56px}
+.faq-box{background:#fff;border-radius:18px;border:1.5px solid #e8edf2;overflow:hidden;box-shadow:0 4px 24px rgba(26,74,107,.06)}
+.faq-item{border-bottom:1.5px solid #e8edf2}
+.faq-item:last-child{border-bottom:none}
+.faq-btn{width:100%;background:none;border:none;cursor:pointer;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;text-align:left;font-family:'Outfit',sans-serif;font-size:15px;font-weight:500;color:var(--slate);transition:color .2s}
+.faq-btn:hover{color:var(--lake)}
+.faq-q{padding-right:16px;line-height:1.5}
+.faq-ico{color:var(--lake);font-size:24px;flex-shrink:0;transition:transform .25s;line-height:1}
+.faq-ico.open{transform:rotate(45deg)}
+.faq-ans{display:none;padding:0 28px 22px;color:#64748b;font-size:15px;line-height:1.75}
+.faq-ans.open{display:block}
+
+/* ─── CONTACT ─── */
+.contact-bg{background:var(--cream);padding:100px 28px}
+.contact-in{max-width:1180px;margin:0 auto}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.contact-img-wrap{position:relative;border-radius:18px;overflow:hidden;height:340px;margin-bottom:28px}
+.contact-img-wrap img{width:100%;height:100%;object-fit:cover}
+.contact-img-overlay{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(10,30,50,.7))}
+.contact-img-caption{position:absolute;bottom:20px;left:20px;right:20px}
+.contact-img-caption h3{font-family:'Cormorant Garamond',serif;color:#fff;font-size:22px;font-weight:700;margin-bottom:4px}
+.contact-img-caption p{color:rgba(255,255,255,.75);font-size:13px}
+.contact-info-list{display:flex;flex-direction:column;gap:18px}
+.contact-info-item{display:flex;gap:14px;align-items:center}
+.contact-info-icon{width:44px;height:44px;background:var(--lake-l);border-radius:11px;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.contact-info-lbl{font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.contact-info-val{color:var(--slate);font-weight:500;font-size:15px}
+form.qform{display:flex;flex-direction:column;gap:18px;background:#fff;border-radius:18px;padding:36px;border:1.5px solid #e8edf2;box-shadow:0 4px 24px rgba(26,74,107,.07)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg label{font-size:13px;font-weight:600;color:#475569}
+input,textarea,select{width:100%;padding:13px 16px;border:1.5px solid #dde3ea;border-radius:8px;font-family:'Outfit',sans-serif;font-size:14px;color:var(--slate);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus,select:focus{border-color:var(--lake-m);box-shadow:0 0 0 3px rgba(46,125,184,.1)}
+textarea{resize:vertical}
+.form-note{color:#94a3b8;font-size:13px;text-align:center}
+.success-box{background:var(--forest-l);border:2px solid var(--forest);border-radius:16px;padding:52px 40px;text-align:center;display:none}
+.success-box.show{display:block}
+.success-ico{font-size:52px;margin-bottom:16px}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--forest);margin-bottom:10px}
+.success-p{color:#3d6b37;font-size:16px;line-height:1.7}
+
+/* ─── FOOTER ─── */
+footer{background:var(--slate);padding:56px 28px 32px}
+.footer-in{max-width:1180px;margin:0 auto}
+.footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;margin-bottom:48px}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px;text-decoration:none}
+.footer-logo-mark{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:16px}
+.footer-logo-name{font-family:'Cormorant Garamond',serif;color:#fff;font-size:20px;font-weight:700}
+.footer-tagline{color:rgba(255,255,255,.45);font-size:14px;max-width:260px;line-height:1.65}
+.footer-cols{display:flex;gap:56px;flex-wrap:wrap}
+.footer-col-h{color:rgba(255,255,255,.35);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+.footer-col-item{color:rgba(255,255,255,.6);font-size:14px;margin-bottom:10px;text-decoration:none;display:block;transition:color .2s}
+.footer-col-item:hover{color:rgba(255,255,255,.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-copy{color:rgba(255,255,255,.3);font-size:13px}
+
+/* ─── WHATSAPP CHATBOT ─── */
+#wa-widget{position:fixed;bottom:28px;right:28px;z-index:999;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+#wa-btn{width:58px;height:58px;border-radius:50%;background:var(--wa);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,211,102,.4);transition:transform .2s,box-shadow .2s;position:relative}
+#wa-btn:hover{transform:scale(1.08);box-shadow:0 10px 32px rgba(37,211,102,.5)}
+#wa-btn svg{width:28px;height:28px;fill:#fff}
+.wa-pulse{position:absolute;inset:-4px;border-radius:50%;border:3px solid rgba(37,211,102,.45);animation:wa-ring 2s ease-out infinite}
+@keyframes wa-ring{0%{transform:scale(1);opacity:1}100%{transform:scale(1.55);opacity:0}}
+.wa-notif{position:absolute;top:-3px;right:-3px;width:18px;height:18px;background:#ef4444;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff}
+#wa-panel{background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.18);width:330px;overflow:hidden;display:none;flex-direction:column;border:1.5px solid #e8edf2;transform-origin:bottom right;animation:popIn .25s ease}
+#wa-panel.open{display:flex}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.wa-header{background:var(--wa-d);padding:18px 20px;display:flex;align-items:center;gap:12px}
+.wa-avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:22px;flex-shrink:0}
+.wa-header-info{flex:1}
+.wa-header-name{color:#fff;font-weight:600;font-size:15px}
+.wa-header-status{color:rgba(255,255,255,.7);font-size:12px;display:flex;align-items:center;gap:5px}
+.wa-status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80}
+.wa-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:22px;cursor:pointer;line-height:1;padding:0;transition:color .2s}
+.wa-close:hover{color:#fff}
+.wa-chat{background:#ece5dd;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:180px}
+.wa-bubble{background:#fff;border-radius:0 12px 12px 12px;padding:12px 15px;max-width:82%;font-size:14px;line-height:1.55;color:#111;box-shadow:0 1px 3px rgba(0,0,0,.1);position:relative}
+.wa-bubble::before{content:'';position:absolute;top:0;left:-8px;border:8px solid transparent;border-top:8px solid #fff;border-right:none}
+.wa-time{font-size:11px;color:#94a3b8;text-align:right;margin-top:4px}
+.wa-quick{padding:12px 14px;background:#f0f0f0;display:flex;flex-direction:column;gap:8px;border-top:1px solid #e0e0e0}
+.wa-quick-label{font-size:12px;color:#666;font-weight:500;margin-bottom:2px}
+.wa-quick-btns{display:flex;flex-direction:column;gap:6px}
+.wa-qbtn{background:#fff;border:1.5px solid var(--wa-d);border-radius:20px;padding:8px 14px;font-size:13px;font-weight:600;color:var(--wa-d);cursor:pointer;text-align:center;transition:all .2s;text-decoration:none;display:block}
+.wa-qbtn:hover{background:var(--wa-d);color:#fff}
+.wa-footer{padding:12px 14px;background:#fff;border-top:1px solid #f0f0f0;text-align:center}
+.wa-open-btn{display:block;background:var(--wa);color:#fff;border-radius:10px;padding:12px;font-weight:600;font-size:14px;text-decoration:none;transition:background .2s}
+.wa-open-btn:hover{background:var(--wa-d)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  .hero-in,.how-grid,.why-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
+  .hero-h1{font-size:40px}
+  .srv-grid,.ba-grid{grid-template-columns:1fr 1fr}
+  .nav-links,.nav-call{display:none}
+  .burger{display:block}
+  .stats-in{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gallery-item.tall{grid-row:auto}
+  .hero-card{display:none}
+}
+@media(max-width:600px){
+  .hero-h1{font-size:32px}
+  .sec-h2{font-size:34px}
+  .srv-grid,.ba-grid{grid-template-columns:1fr}
+  .stats-in{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr}
+  .trust-in{gap:10px}
+  .footer-cols{gap:32px}
+  .gallery-grid{grid-template-columns:1fr}
+  #wa-panel{width:calc(100vw - 40px);right:0}
+  #wa-widget{right:16px;bottom:16px}
+  form.qform{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="nav">
+  <div class="nav-in">
+    <a href="#" class="logo">
+      <div class="logo-mark">✦</div>
+      <div>
+        <div class="logo-name">Fresh Start</div>
+        <div class="logo-sub">Cleaning Service</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#services" class="nav-a">Services</a>
+      <a href="#how" class="nav-a">How It Works</a>
+      <a href="#whyus" class="nav-a">Why Us</a>
+      <a href="#contact" class="nav-a">Contact</a>
+    </div>
+    <a href="tel:3018598399" class="btn btn-primary nav-call">📞 301-859-8399</a>
+    <button class="burger" id="burger">☰</button>
+  </div>
+  <div class="mob-menu" id="mob-menu">
+    <a href="#services" class="nav-a">Services</a>
+    <a href="#how" class="nav-a">How It Works</a>
+    <a href="#whyus" class="nav-a">Why Us</a>
+    <a href="#contact" class="nav-a">Contact</a>
+    <a href="tel:3018598399" class="btn btn-primary" style="text-align:center;margin-top:6px">📞 Call Now</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1600&auto=format&fit=crop&q=80" alt="Deep Creek Lake vacation cabin"/>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-in">
+    <div>
+      <div class="anim hero-pill">
+        <span class="hero-pill-dot"></span>
+        <span class="hero-pill-txt">Deep Creek Lake · Garrett County, MD</span>
+      </div>
+      <h1 class="serif hero-h1 anim" data-d="1">
+        The Cleaning Service<br>
+        <em>Deep Creek Lake</em><br>
+        Hosts Trust Most
+      </h1>
+      <p class="hero-p anim" data-d="2">
+        Same-day vacation rental turnover — photo-confirmed, guest-ready, and managed remotely. Trusted by VRBO &amp; Airbnb owners across Garrett County.
+      </p>
+      <div class="hero-btns anim" data-d="3">
+        <a href="#contact" class="btn btn-primary" style="font-size:16px;padding:16px 36px">Get a Free Quote</a>
+        <a href="#how" class="btn btn-outline" style="font-size:16px">How It Works</a>
+      </div>
+    </div>
+    <div class="hero-card anim" data-d="2">
+      <div class="hero-card-title">Your property — guest-ready in hours</div>
+      <div class="hero-card-img">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80" alt="Pristine vacation rental interior"/>
+      </div>
+      <div class="hero-card-feat">
+        <div class="hero-feat-row"><div class="hero-feat-icon">📸</div> Photo confirmation after every clean</div>
+        <div class="hero-feat-row"><div class="hero-feat-icon">📅</div> Syncs with your Airbnb/VRBO calendar</div>
+        <div class="hero-feat-row"><div class="hero-feat-icon">✅</div> Licensed & insured in Maryland</div>
+        <div class="hero-feat-row"><div class="hero-feat-icon">⚡</div> Same-day turnover available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar">
+  <div class="stats-in">
+    <div class="stat-item anim"><div class="stat-val">200+</div><div class="stat-lbl">Properties Cleaned</div></div>
+    <div class="stat-item anim" data-d="1"><div class="stat-val">4.9★</div><div class="stat-lbl">Average Rating</div></div>
+    <div class="stat-item anim" data-d="2"><div class="stat-val">2hr</div><div class="stat-lbl">Response Time</div></div>
+    <div class="stat-item anim" data-d="3"><div class="stat-val">100%</div><div class="stat-lbl">Licensed & Insured</div></div>
+  </div>
+</div>
+
+<!-- ═══ TRUST BAR ═══ -->
+<div class="trust-bar">
+  <div class="trust-in">
+    <span class="trust-item">✓ Licensed & Insured in Maryland</span>
+    <span class="trust-item">✓ Deep Creek Lake Vacation Rental Specialists</span>
+    <span class="trust-item">✓ Same-Day Turnover Available</span>
+    <span class="trust-item">✓ Remote-Owner Friendly</span>
+  </div>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="section srv-bg" id="services">
+  <div class="section-in">
+    <div class="anim srv-head">
+      <div class="sec-label">What We Offer</div>
+      <h2 class="serif sec-h2">Services Built for <span>Deep Creek</span></h2>
+      <p class="sec-p" style="max-width:520px;margin:0 auto">Whether you're a vacation rental host, full-time resident, or property manager — we have a clean for you.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card anim">
+        <div class="srv-img">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&auto=format&fit=crop&q=80" alt="Vacation rental bedroom turnover"/>
+          <span class="srv-badge">Most Requested</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon">🏡</div>
+          <h3 class="srv-title">Vacation Rental Turnover</h3>
+          <div class="srv-sub">Deep Creek Lake Specialist</div>
+          <p class="srv-desc">Complete same-day turnover between guests — linens, sanitizing, restocking, and photo-ready staging. VRBO & Airbnb host trusted.</p>
+          <div class="srv-cta"><a href="#contact">Get a Quote →</a></div>
+        </div>
+      </div>
+      <div class="srv-card anim" data-d="1">
+        <div class="srv-img">
+          <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=80" alt="Deep kitchen cleaning"/>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon">✨</div>
+          <h3 class="srv-title">Deep Clean & Reset</h3>
+          <div class="srv-sub">Seasonal & Move-In/Out</div>
+          <p class="srv-desc">Full-depth cleaning for seasonal openings, end-of-summer resets, or property hand-offs. Every corner, every surface.</p>
+          <div class="srv-cta"><a href="#contact">Get a Quote →</a></div>
+        </div>
+      </div>
+      <div class="srv-card anim" data-d="2">
+        <div class="srv-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&auto=format&fit=crop&q=80" alt="Recurring residential cleaning"/>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon">🔄</div>
+          <h3 class="srv-title">Recurring Residential</h3>
+          <div class="srv-sub">Weekly · Bi-Weekly · Monthly</div>
+          <p class="srv-desc">Dependable, background-checked cleaners on a schedule that fits your life. Garrett County families since day one.</p>
+          <div class="srv-cta"><a href="#contact">Get a Quote →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PHOTO GALLERY STRIP ═══ -->
+<div class="gallery-strip">
+  <div class="gallery-grid">
+    <div class="gallery-item tall">
+      <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&auto=format&fit=crop&q=80" alt="Deep Creek Lake cabin exterior"/>
+      <div class="gallery-caption">Deep Creek Lake Vacation Properties</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&auto=format&fit=crop&q=80" alt="Clean hotel-style bed setup"/>
+      <div class="gallery-caption">Hotel-Standard Bed Setup</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=600&auto=format&fit=crop&q=80" alt="Sparkling clean bathroom"/>
+      <div class="gallery-caption">Spotless Bathrooms</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=600&auto=format&fit=crop&q=80" alt="Clean modern kitchen"/>
+      <div class="gallery-caption">Sanitized Kitchens</div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&auto=format&fit=crop&q=80" alt="Pristine living room"/>
+      <div class="gallery-caption">Guest-Ready Living Spaces</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section how-bg" id="how">
+  <div class="section-in">
+    <div class="how-grid">
+      <div class="anim">
+        <div class="how-img-wrap">
+          <img src="https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=800&auto=format&fit=crop&q=80" alt="Professional cleaning team at work"/>
+          <div class="how-img-badge">
+            <div class="how-badge-icon">📸</div>
+            <div class="how-badge-txt"><strong>Photo confirmation</strong> sent to you after every single clean — before your guests arrive.</div>
+          </div>
+        </div>
+      </div>
+      <div class="anim" data-d="1">
+        <div class="sec-label">Simple Process</div>
+        <h2 class="serif sec-h2">How It Works</h2>
+        <p class="sec-p">Three steps from booking to a guest-ready property — we handle everything in between.</p>
+        <div class="steps-list">
+          <div class="step-item">
+            <div class="step-num-circle">01</div>
+            <div class="step-body">
+              <div class="step-title">Book Online or Call</div>
+              <p class="step-desc">Tell us your property size, location, and turnover date. We confirm within 2 hours.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num-circle">02</div>
+            <div class="step-body">
+              <div class="step-title">We Handle the Clean</div>
+              <p class="step-desc">Licensed & insured team arrives on schedule. Linens, bathrooms, kitchen — photo-ready standard every time.</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num-circle">03</div>
+            <div class="step-body">
+              <div class="step-title">Guest-Ready Confirmation</div>
+              <p class="step-desc">You get a photo notification before check-in. No surprises, ever — even from 500 miles away.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY US ═══ -->
+<section class="why-bg" id="whyus">
+  <div class="why-deco"></div><div class="why-deco2"></div>
+  <div class="why-in">
+    <div class="why-grid">
+      <div class="anim">
+        <div class="why-label">Why Fresh Start?</div>
+        <h2 class="serif why-h2">Out-of-State Owners:<br>We've Got You.</h2>
+        <p class="why-p">About 70% of Deep Creek Lake property owners live outside Garrett County. They need a cleaner they can vet, trust, and manage completely remotely. Fresh Start delivers exactly that.</p>
+        <div class="feat-list">
+          <div class="feat-row"><div class="feat-chk">✓</div><span class="feat-txt">Same-day photo confirmation after every clean</span></div>
+          <div class="feat-row"><div class="feat-chk">✓</div><span class="feat-txt">Coordinate directly with your VRBO/Airbnb calendar</span></div>
+          <div class="feat-row"><div class="feat-chk">✓</div><span class="feat-txt">Licensed, insured & background-checked team</span></div>
+          <div class="feat-row"><div class="feat-chk">✓</div><span class="feat-txt">Local Garrett County roots — we know every road</span></div>
+          <div class="feat-row"><div class="feat-chk">✓</div><span class="feat-txt">WhatsApp & text updates — always reachable</span></div>
+        </div>
+      </div>
+      <div class="why-right anim" data-d="1">
+        <div class="why-photo">
+          <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&auto=format&fit=crop&q=80" alt="Beautiful Deep Creek Lake home"/>
+        </div>
+        <div class="testi">
+          <p class="testi-txt">"As a Pittsburgh-based owner with a cabin at Deep Creek, Fresh Start has been a game changer. I get photos after every turnover and never have to worry."</p>
+          <div class="testi-author">— Airbnb Superhost, Garrett County Property Owner</div>
+        </div>
+        <div class="why-stats-row">
+          <div class="why-stat"><div class="why-stat-val">2hr</div><div class="why-stat-lbl">Avg response</div></div>
+          <div class="why-stat"><div class="why-stat-val">100%</div><div class="why-stat-lbl">Show rate</div></div>
+          <div class="why-stat"><div class="why-stat-val">5★</div><div class="why-stat-lbl">Host reviews</div></div>
+          <div class="why-stat"><div class="why-stat-val">0</div><div class="why-stat-lbl">Missed turnovers</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BEFORE / AFTER ═══ -->
+<section class="ba-bg">
+  <div class="ba-in">
+    <div class="anim ba-head">
+      <div class="sec-label">The Difference We Make</div>
+      <h2 class="serif sec-h2" style="margin-bottom:8px">Before & After</h2>
+      <p class="sec-p" style="max-width:480px;margin:0 auto">Every property we touch goes from guest-used to guest-ready — hotel standard, every time.</p>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card anim">
+        <div class="ba-imgs">
+          <div class="ba-img-wrap">
+            <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&auto=format&fit=crop&q=80" alt="Messy bedroom before cleaning"/>
+            <span class="ba-tag before">Before</span>
+          </div>
+          <div class="ba-img-wrap">
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=500&auto=format&fit=crop&q=80" alt="Clean bedroom after cleaning"/>
+            <span class="ba-tag after">After</span>
+          </div>
+        </div>
+        <div class="ba-card-body">
+          <div class="ba-card-title">Master Bedroom Turnover</div>
+          <div class="ba-card-sub">Fresh linens · Vacuumed · Dusted · Hotel-style staging</div>
+        </div>
+      </div>
+      <div class="ba-card anim" data-d="1">
+        <div class="ba-imgs">
+          <div class="ba-img-wrap">
+            <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&auto=format&fit=crop&q=70&sat=-50" alt="Dirty bathroom before cleaning"/>
+            <span class="ba-tag before">Before</span>
+          </div>
+          <div class="ba-img-wrap">
+            <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=500&auto=format&fit=crop&q=80" alt="Spotless bathroom after cleaning"/>
+            <span class="ba-tag after">After</span>
+          </div>
+        </div>
+        <div class="ba-card-body">
+          <div class="ba-card-title">Full Bathroom Deep Clean</div>
+          <div class="ba-card-sub">Sanitized · Scrubbed · Restocked · Sparkling</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq-bg">
+  <div class="faq-in">
+    <div class="anim faq-head">
+      <div class="sec-label">Common Questions</div>
+      <h2 class="serif sec-h2" style="margin-bottom:0">Frequently Asked</h2>
+    </div>
+    <div class="anim faq-box" data-d="1">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Do you handle same-day turnovers between guests?</span>
+          <span class="faq-ico">+</span>
+        </button>
+        <div class="faq-ans">Yes — same-day turnovers are our specialty. We coordinate directly around your VRBO/Airbnb checkout and check-in times.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Are you licensed and insured in Maryland?</span>
+          <span class="faq-ico">+</span>
+        </button>
+        <div class="faq-ans">Fully licensed and insured in the state of Maryland. We carry liability coverage on every job, every time.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">How do out-of-state owners manage bookings?</span>
+          <span class="faq-ico">+</span>
+        </button>
+        <div class="faq-ans">Remotely, with ease. We communicate via text, WhatsApp, or email. You'll get photo confirmation after every clean, so you always know the status of your property.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">What areas do you cover?</span>
+          <span class="faq-ico">+</span>
+        </button>
+        <div class="faq-ans">Deep Creek Lake, Oakland, Swanton, and surrounding Garrett County. If you're unsure, just ask — we'll let you know.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-q">Do you supply your own cleaning products?</span>
+          <span class="faq-ico">+</span>
+        </button>
+        <div class="faq-ans">Yes — we bring all supplies and equipment. If you have preferred products at your property, we're happy to use those instead.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section class="contact-bg" id="contact">
+  <div class="contact-in">
+    <div class="contact-grid">
+      <div class="anim">
+        <div class="sec-label">Get in Touch</div>
+        <h2 class="serif sec-h2">Request a<br>Free Quote</h2>
+        <p class="sec-p" style="margin-bottom:32px">Deep Creek Lake vacation rental owner? Local resident? Tell us about your property and we'll get back to you within 2 hours.</p>
+        <div class="contact-img-wrap">
+          <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&auto=format&fit=crop&q=80" alt="Morgan Spink Fresh Start owner"/>
+          <div class="contact-img-overlay"></div>
+          <div class="contact-img-caption">
+            <h3>Morgan Spink</h3>
+            <p>Owner · Fresh Start Cleaning Service · Oakland, MD</p>
+          </div>
+        </div>
+        <div class="contact-info-list">
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📍</div>
+            <div><div class="contact-info-lbl">Location</div><div class="contact-info-val">Oakland, MD · Garrett County</div></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📞</div>
+            <div><div class="contact-info-lbl">Phone</div><div class="contact-info-val"><a href="tel:3018598399" style="color:var(--lake);text-decoration:none">301-859-8399</a></div></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">💬</div>
+            <div><div class="contact-info-lbl">WhatsApp</div><div class="contact-info-val"><a href="https://wa.me/13018598399" target="_blank" style="color:var(--wa-d);text-decoration:none">Message us on WhatsApp</a></div></div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon">📘</div>
+            <div><div class="contact-info-lbl">Facebook</div><div class="contact-info-val">@FSCS23</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="anim" data-d="1">
+        <div class="success-box" id="success-box">
+          <div class="success-ico">✅</div>
+          <h3 class="serif success-title">Quote Request Sent!</h3>
+          <p class="success-p">We'll be in touch within 2 hours. Thank you for reaching out to Fresh Start Cleaning Service!</p>
+        </div>
+        <form class="qform" id="qform" onsubmit="submitForm(event)">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--slate);margin-bottom:4px">Tell us about your property</div>
+          <div style="color:#94a3b8;font-size:13px;margin-bottom:8px">We respond within 2 hours · No commitment required</div>
+          <div class="form-row">
+            <div class="fg"><label>Full Name *</label><input type="text" required placeholder="Jane Smith"/></div>
+            <div class="fg"><label>Phone</label><input type="tel" placeholder="(301) 555-0000"/></div>
+          </div>
+          <div class="fg"><label>Email Address *</label><input type="email" required placeholder="jane@example.com"/></div>
+          <div class="fg">
+            <label>Service Needed</label>
+            <select>
+              <option value="">Select a service...</option>
+              <option>Deep Creek Lake Vacation Rental Turnover</option>
+              <option>Seasonal Deep Clean &amp; Reset</option>
+              <option>Recurring Residential Cleaning</option>
+              <option>Move-In / Move-Out Clean</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Property Location</label><input type="text" placeholder="e.g. Deep Creek Lake, Oakland, Swanton..."/></div>
+          <div class="fg"><label>Message</label><textarea rows="4" placeholder="Tell us about your property, frequency, special requests..."></textarea></div>
+          <button type="submit" class="btn btn-primary" style="font-size:16px;padding:16px;text-align:center;width:100%">Send My Quote Request →</button>
+          <p class="form-note">Or message us directly on <a href="https://wa.me/13018598399" target="_blank" style="color:var(--wa-d);font-weight:600">WhatsApp</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-in">
+    <div class="footer-top">
+      <div>
+        <a href="#" class="footer-logo">
+          <div class="footer-logo-mark">✦</div>
+          <div class="footer-logo-name">Fresh Start Cleaning Service</div>
+        </a>
+        <p class="footer-tagline">Deep Creek Lake's trusted vacation rental turnover specialists. Licensed &amp; insured in Maryland.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <div class="footer-col-h">Services</div>
+          <a href="#services" class="footer-col-item">Vacation Rental Turnover</a>
+          <a href="#services" class="footer-col-item">Deep Clean &amp; Reset</a>
+          <a href="#services" class="footer-col-item">Recurring Residential</a>
+        </div>
+        <div>
+          <div class="footer-col-h">Contact</div>
+          <a href="tel:3018598399" class="footer-col-item">📞 301-859-8399</a>
+          <a href="https://wa.me/13018598399" class="footer-col-item" target="_blank">💬 WhatsApp</a>
+          <span class="footer-col-item">📘 @FSCS23</span>
+          <span class="footer-col-item">📍 Oakland, MD</span>
+        </div>
+        <div>
+          <div class="footer-col-h">Areas Served</div>
+          <span class="footer-col-item">Deep Creek Lake</span>
+          <span class="footer-col-item">Oakland, MD</span>
+          <span class="footer-col-item">Swanton, MD</span>
+          <span class="footer-col-item">Garrett County</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Fresh Start Cleaning Service · Morgan Spink, Owner</div>
+      <div class="footer-copy">Deep Creek Lake Vacation Rental Turnover Cleaning</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ WHATSAPP CHATBOT WIDGET ═══ -->
+<div id="wa-widget">
+  <div id="wa-panel">
+    <div class="wa-header">
+      <div class="wa-avatar">🧹</div>
+      <div class="wa-header-info">
+        <div class="wa-header-name">Fresh Start Cleaning</div>
+        <div class="wa-header-status"><span class="wa-status-dot"></span> Typically replies in minutes</div>
+      </div>
+      <button class="wa-close" onclick="closeWa()">✕</button>
+    </div>
+    <div class="wa-chat">
+      <div class="wa-bubble">
+        👋 Hi there! I'm Morgan from <strong>Fresh Start Cleaning Service</strong>.<br><br>
+        How can I help you today?
+        <div class="wa-time">Just now</div>
+      </div>
+    </div>
+    <div class="wa-quick">
+      <div class="wa-quick-label">Quick replies — tap to send:</div>
+      <div class="wa-quick-btns">
+        <a class="wa-qbtn" href="https://wa.me/13018598399?text=Hi%20Morgan!%20I%27d%20like%20a%20quote%20for%20vacation%20rental%20turnover%20cleaning%20at%20Deep%20Creek%20Lake." target="_blank">🏡 Get a vacation rental quote</a>
+        <a class="wa-qbtn" href="https://wa.me/13018598399?text=Hi!%20I%27d%20like%20to%20book%20a%20same-day%20turnover%20clean." target="_blank">⚡ Book a same-day turnover</a>
+        <a class="wa-qbtn" href="https://wa.me/13018598399?text=Hi%20Morgan!%20What%20areas%20do%20you%20serve%20around%20Deep%20Creek%20Lake%3F" target="_blank">📍 Ask about service areas</a>
+      </div>
+    </div>
+    <div class="wa-footer">
+      <a href="https://wa.me/13018598399" target="_blank" class="wa-open-btn">💬 Open WhatsApp Chat</a>
+    </div>
+  </div>
+  <button id="wa-btn" onclick="toggleWa()" aria-label="Chat on WhatsApp">
+    <div class="wa-pulse"></div>
+    <span class="wa-notif">1</span>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll',function(){
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+});
+
+// Mobile menu
+document.getElementById('burger').addEventListener('click',function(){
+  var m=document.getElementById('mob-menu');
+  m.classList.toggle('open');
+  this.textContent=m.classList.contains('open')?'✕':'☰';
+});
+document.querySelectorAll('#mob-menu a').forEach(function(a){
+  a.addEventListener('click',function(){
+    document.getElementById('mob-menu').classList.remove('open');
+    document.getElementById('burger').textContent='☰';
+  });
+});
+
+// Scroll animations
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.anim').forEach(function(el){obs.observe(el);});
+
+// FAQ
+function toggleFaq(btn){
+  var ico=btn.querySelector('.faq-ico');
+  var ans=btn.nextElementSibling;
+  var open=ans.classList.contains('open');
+  document.querySelectorAll('.faq-ans').forEach(function(a){a.classList.remove('open');});
+  document.querySelectorAll('.faq-ico').forEach(function(i){i.classList.remove('open');});
+  if(!open){ans.classList.add('open');ico.classList.add('open');}
+}
+
+// Form
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('qform').style.display='none';
+  document.getElementById('success-box').classList.add('show');
+}
+
+// WhatsApp widget
+var waOpen=false;
+function toggleWa(){
+  waOpen=!waOpen;
+  var panel=document.getElementById('wa-panel');
+  var notif=document.querySelector('.wa-notif');
+  panel.classList.toggle('open',waOpen);
+  if(notif)notif.style.display='none';
+}
+function closeWa(){
+  waOpen=false;
+  document.getElementById('wa-panel').classList.remove('open');
+}
+
+// Auto-open WhatsApp after 8 seconds
+setTimeout(function(){
+  if(!waOpen){toggleWa();}
+},8000);
+</script>
+</body>
+</html>
